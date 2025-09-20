@@ -1,4 +1,4 @@
-const filePath = './dummy.json';
+const filePath = './orders.json';
 const container = document.getElementById('order-accordion-container');
 const paymentMethods = ["BCA Transfer", "OVO", "GoPay", "Dana", "Credit Card"];
 
@@ -6,7 +6,7 @@ async function fetchOrders() {
     try {
         const response = await fetch(filePath);
         if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-        const orders = await response.json();
+        let orders = await response.json();
         console.log('Data berhasil diambil:', orders);
         return orders;
     } catch (error) {
@@ -16,6 +16,12 @@ async function fetchOrders() {
 }
 
 function renderOrders(orders) {
+
+    if(sessionStorage.getItem("orders")){
+        const storedOrders = JSON.parse(sessionStorage.getItem("orders") || "[]");
+        orders = [...orders, ...storedOrders];
+    }
+    
     orders.reverse().forEach(order => {
         const card = document.createElement('div');
         card.classList.add('order-card');
@@ -58,7 +64,32 @@ function renderOrders(orders) {
             let errorMsg = document.getElementById(`errorMsg-${order.orderId}`);
             errorMsg.style = "margin-left:1rem;";
             const selected = form.querySelector(`input[name="payment-${order.orderId}"]:checked`);
+
+
+            function addHistory(order) {
+                let history = JSON.parse(sessionStorage.getItem("HistoryPembelian")) || [];
+                const newEntry = {
+                    orderId: order.orderId,
+                    fullname: order.fullname,
+                    type: order.type,
+                    harga: order.harga,
+                    metodePembayaran: order.metodePembayaran
+                };
+
+                history.push(newEntry);
+                sessionStorage.setItem("HistoryPembelian", JSON.stringify(history));
+            }
+
             if(selected) {
+                const history = { 
+                    orderId: order.orderId,
+                    fullname: order.fullname,
+                    type: order.type,
+                    metodePembayaran: selected.value,
+                    harga: order.harga,
+                };
+                console.log(history);
+                addHistory(history);
                 alert(`Order ${order.orderId} akan dibayar menggunakan ${selected.value}`);
                 errorMsg.style.display = 'none';
             } else {

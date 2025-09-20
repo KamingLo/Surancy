@@ -538,8 +538,7 @@ form p{
   max-width: 300px;
 }
 
-.order-accordion-container{
-  margin-top: var(--spacing-16);
+.accordion-container{
   padding: 5rem;
 }
 
@@ -608,6 +607,58 @@ form p{
   transform: rotate(90deg);
 }
 
+.history-card {
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+  margin-bottom: 1rem;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.history-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+}
+
+.history-card-header {
+  padding: 1rem 1.5rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(90deg, #4f46e5, #6366f1);
+  color: white;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.history-card-header span:last-child {
+  transition: transform 0.3s ease;
+}
+
+.history-card.active .history-card-header span:last-child {
+  transform: rotate(90deg);
+}
+
+.history-card-detail {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s ease, padding 0.35s ease;
+  padding: 0 1.5rem;
+  background-color: #f9fafb;
+}
+
+.history-card.active .history-card-detail {
+  max-height: 400px;
+  padding: 1rem 1.5rem;
+}
+
+.history-card-detail p {
+  margin: 0.5rem 0;
+  color: #333;
+  line-height: 1.4;
+}
 .footer {
   padding: var(--spacing-12) 0;
   margin-top: var(--spacing-16);
