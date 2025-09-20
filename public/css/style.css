@@ -539,15 +539,15 @@ form p{
 }
 
 .accordion-container{
+  margin-top: var(--spacing-16);
   padding: 5rem;
 }
 
-/* Order Card Radio */
 .order-radio {
   padding: 0.5rem 1rem;
   margin: 0.5rem 0;
   border-radius: 8px;
-  border: 1px solid #d1d5db; /* soft gray */
+  border: 1px solid #d1d5db;
   font-size: 0.95rem;
   background-color: #fafafa;
   transition: background 0.2s, border-color 0.2s;
@@ -558,7 +558,6 @@ form p{
   border-color: #a1a1aa;
 }
 
-/* Order Card */
 .order-card {
   background: #ffffff;
   padding: 1.5rem;
@@ -574,7 +573,6 @@ form p{
   box-shadow: 0 10px 25px rgba(0,0,0,0.08);
 }
 
-/* Header */
 .order-card-header {
   display: flex;
   justify-content: space-between;
