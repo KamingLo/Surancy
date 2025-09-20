@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Surancy | Your Personal Insurance Partner</title>
+    <link rel="stylesheet" href="./public/css/style.css">
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css">
+</head>
+
+<body>
+    <header class="header">
+        <div class="header-container">
+            <a href="./index.html" class="logo">Surancy</a>
+            <nav class="nav" id="navbar">
+                <a href="./login.html" class="btn-outline" id="login-link">Login</a>
+                <a href="./signup.html" class="btn-primary" id="signup-link">Sign Up</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="purchase-page container">
+        <div class="purchase-card">
+            <h1 class="logo-form" style="margin-bottom: 1rem;">
+            <a href="./index.html">Surancy</a>
+            </h1>
+            <p class="subtitle">Formulir Pembelian Asuransi Jiwa</p>
+
+            <form id="InsuranceForm">
+                <div class="form-group">
+                    <label for="fullname">Nama Lengkap</label>
+                    <input type="text" id="fullname" placeholder="John Doe" required />
+                </div>
+
+                <div class="form-group">
+                    <label for="kelahiran">Tanggal lahir</label>
+                    <input type="date" id="kelahiran" required />
+                </div>
+
+                <div class="form-group">
+                    <label for="tanggungan">Besaran pertanggungan</label>
+                    <select id="tanggungan" required>
+                        <option value="">-- Pilih pertanggungan --</option>
+                        <option value="1000000000">Rp1.000.000.000</option>
+                        <option value="2000000000">Rp2.000.000.000</option>
+                        <option value="3500000000">Rp3.500.000.000</option>
+                        <option value="5000000000">Rp5.000.000.000</option>
+                        <option value="10000000000">Rp10.000.000.000</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="premi">Harga Premi (Rp / tahun)</label>
+                    <input
+                    type="text"
+                    id="premi"
+                    readonly
+                    style="background:#e6e6e6; color: #000000"
+                    />
+                </div>
+
+                <button type="button" class="btn-action" onclick="hitungPremi()">
+                    Hitung Premi
+                </button>
+                <button type="submit" class="btn-action" onclick="checkout()">
+                    Checkout
+                </button>
+
+            <p id="errorMsg" class="error-msg"></p>
+            </form>
+        </div>
+        </main>
+
+    <footer class="footer">
+        <div class="container footer-container">
+            <div class="footer-left">
+                <h2 class="logo">Surancy</h2>
+                <p>Thank you for visiting Surancy. We are committed to providing the best experience for you.</p>
+            </div>
+            <nav class="footer-nav" id="footer-nav">
+                <a href="./login.html" class="footer-link">Login</a>
+                <a href="./signup.html" class="footer-link">Sign Up</a>
+            </nav>
+            <div class="footer-contact">
+                <p><i class="bx bx-phone"></i> +62 812-3456-7890</p>
+                <p><i class="bx bx-envelope"></i> support@surancy.com</p>
+                <p><i class="bx bx-map"></i> Jakarta, Indonesia</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="./public/js/auth-check.js"></script>
+    <script src="./public/js/navbar.js" defer></script>
+    <script>
+        const errorMsg = document.getElementById("errorMsg");
+        let status = false;
+        let premiTahunan= 0;
+        let fullname;
+        function hitungPremi() {
+            console.log("saya bisa")
+            fullname = document.getElementById("fullname").value;
+            const kelahiran = document.getElementById("kelahiran").value;
+            const tanggungan = parseInt(document.getElementById("tanggungan").value);
+            const errorMsg = document.getElementById("errorMsg");
+            const premiInput = document.getElementById("premi");
+
+            if(!fullname || !kelahiran || !tanggungan){
+                premiInput.value = "Lengkapi data input terlebih dahulu";
+                return;
+            }
+            
+            const birthDate = new Date(kelahiran);
+            const today = new Date();
+            let age = today.getFullYear() - birthDate.getFullYear();
+            const mDiff = today.getMonth() - birthDate.getMonth();
+            
+
+            if (mDiff < 0 || (mDiff === 0 && today.getDate() < birthDate.getDate())) {
+                age--;
+            }
+
+            let m = 0;
+            
+            if (age <= 30) {
+                m = 0.002;
+            } else if (age <= 50) {
+                m = 0.004;
+            } else {
+                m = 0.01;
+            }
+
+            const t = parseInt(tanggungan, 10);
+            premiTahunan = t * m;
+            status = true;
+            premiInput.value = "Rp " + premiTahunan.toLocaleString("id-ID");
+        }
+
+        function checkout(){
+            function saveOrder(order) {
+                let orders = JSON.parse(sessionStorage.getItem("orders")) || [];
+                orders.push(order);
+                sessionStorage.setItem("orders", JSON.stringify(orders));
+            }
+
+            document.getElementById("InsuranceForm").addEventListener("submit", function(e) {
+                if(status){
+                    e.preventDefault();
+                    const order = { 'orderId': ("ORD-" + Date.now() + "-" + Math.floor(Math.random() * 1000)),'fullname': fullname, 'type': 'jiwa', 'harga':premiTahunan};
+                    saveOrder(order);
+                    window.location.href = "./checkout.html"; 
+                    return;
+                }else{
+                    e.preventDefault();
+                    console.log("saya terpanggil haha")
+                    errorMsg.textContent = "Lakukan perhitungan premi terlebih dahulu";
+                    errorMsg.style.display = "block";               
+                }
+            });
+        }
+    </script>
+</body>
+</html>
