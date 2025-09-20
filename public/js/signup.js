@@ -14,43 +14,43 @@ document.getElementById("signupForm").addEventListener("submit", function (e) {
     successMsg.style.display = "none";
 
     if (!fullname || !email || !phone || !password || !confirmPassword) {
-        errorMsg.textContent = "All fields are required.";
+        errorMsg.textContent = "Semua field harus diisi.";
         errorMsg.style.display = "block";
         return;
     }
 
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailPattern.test(email)) {
-        errorMsg.textContent = "Invalid email format.";
+        errorMsg.textContent = "Format email tidak valid.";
         errorMsg.style.display = "block";
         return;
     }
 
     if(fullname.length < 3 || fullname.length > 32 || fullname.match(/\d/) !== null){
-        errorMsg.textContent = "Username must be between 3 to 32 characters, and must not contain numbers";
+        errorMsg.textContent = "Nama harus antara 3 sampai 32 karakter, dan tidak boleh mengandung angka";
         errorMsg.style.display = "block";
         return;
     }
 
     if (password.length < 8) {
-        errorMsg.textContent = "Password must be at least 8 characters.";
+        errorMsg.textContent = "Kata sandi minimal 8 karakter.";
         errorMsg.style.display = "block";
         return;
     }
 
     if (password !== confirmPassword) {
-        errorMsg.textContent = "Passwords do not match.";
+        errorMsg.textContent = "Kata sandi tidak cocok.";
         errorMsg.style.display = "block";
         return;
     }
     
     if(!phone.startsWith("08")){
-        errorMsg.textContent = "Phone number must start from 08";
+        errorMsg.textContent = "Nomor telepon harus dimulai dengan 08";
         errorMsg.style.display = "block";
         return;
     }else{
         if(phone.length < 10 || phone.length > 16){
-            errorMsg.textContent = "Phone number must be between 10 or 16 characters";
+            errorMsg.textContent = "Nomor telepon harus antara 10 sampai 16 karakter";
             errorMsg.style.display = "block";
             return;
         }
@@ -59,7 +59,7 @@ document.getElementById("signupForm").addEventListener("submit", function (e) {
     const userData = { fullname, email, phone, password };
     sessionStorage.setItem("user", JSON.stringify(userData));
 
-    successMsg.textContent = "Sign Up successful! Redirecting...";
+    successMsg.textContent = "Pendaftaran berhasil! Mengalihkan...";
     successMsg.style.display = "block";
 
     setTimeout(() => {

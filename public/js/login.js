@@ -13,20 +13,20 @@ document.getElementById("loginForm").addEventListener("submit", function (e) {
   successMsg.style.display = "none";
 
   if (!email || !password) {
-    errorMsg.textContent = "Email and password must be filled.";
+    errorMsg.textContent = "Email dan kata sandi harus diisi.";
     errorMsg.style.display = "block";
     return;
   }
 
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailPattern.test(email)) {
-    errorMsg.textContent = "Email format is not valid";
+    errorMsg.textContent = "Format email tidak valid";
     errorMsg.style.display = "block";
     return;
   }
 
   if(password.length < 8){
-    errorMsg.textContent = "Password must be atleast 8 character";
+    errorMsg.textContent = "Kata sandi minimal 8 karakter";
     errorMsg.style.display = "block";
     return;
   }
@@ -35,7 +35,7 @@ document.getElementById("loginForm").addEventListener("submit", function (e) {
 
   if((email == "admin@surancy.com") && (password == '12345678')){
   sessionStorage.setItem("authenticated", "true");
-  successMsg.textContent = "Login success! Redirecting...";
+  successMsg.textContent = "Berhasil masuk! Mengalihkan...";
   successMsg.style.display = "block";
 
   setTimeout(() => {

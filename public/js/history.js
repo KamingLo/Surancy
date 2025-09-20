@@ -12,7 +12,6 @@ async function fetchHistory() {
 }
 
 function renderHistory(history) {
-
     if(sessionStorage.getItem("HistoryPembelian")){
         const storedOrders = JSON.parse(sessionStorage.getItem("HistoryPembelian") || "[]");
         history = [...history, ...storedOrders];
