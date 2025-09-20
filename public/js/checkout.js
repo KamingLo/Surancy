@@ -2,7 +2,6 @@ const filePath = './dummy.json';
 const container = document.getElementById('order-accordion-container');
 const paymentMethods = ["BCA Transfer", "OVO", "GoPay", "Dana", "Credit Card"];
 
-// Fungsi fetch async
 async function fetchOrders() {
     try {
         const response = await fetch(filePath);
@@ -16,7 +15,6 @@ async function fetchOrders() {
     }
 }
 
-// Fungsi render accordion
 function renderOrders(orders) {
     orders.reverse().forEach(order => {
         const card = document.createElement('div');
