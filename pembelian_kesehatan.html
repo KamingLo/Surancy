@@ -146,7 +146,7 @@
                 }
 
                 const p = 2000000;
-                premiTahunan = p + (m * p) + (rokok * 0.5 * p) + (hipertensi * 0.4 * p) + (diabetes + (0.5 * p)); //harusnya * yang di pdf aneh
+                premiTahunan = p + (m * p) + (rokok * 0.5 * p) + (hipertensi * 0.4 * p) + (diabetes * (0.5 * p)); //saya ganti ke * yang di pdf aneh
                 status = true;
                 premiInput.value = "Rp " + premiTahunan.toLocaleString("id-ID");
             }
